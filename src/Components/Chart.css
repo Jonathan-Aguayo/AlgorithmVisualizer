@@ -1,0 +1,19 @@
+#BarGraphDiv{
+    margin: 10px;
+}
+.toolTipText{
+    visibility: visible;
+    width: 120px;
+    background-color: black;
+    text-align: center;
+    padding: 3px;
+    z-index: 1;
+}
+
+.visx-bar {
+    fill: white;
+}
+
+.visx-bar .done{
+     fill: green !important;
+}
