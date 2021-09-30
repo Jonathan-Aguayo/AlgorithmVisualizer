@@ -3,10 +3,15 @@ import { Bar } from '@visx/shape';
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { Group } from '@visx/group';
-import { scaleBand, scaleLinear } from '@visx/scale';
+import { scaleBand, scaleLinear, scaleOrdinal} from '@visx/scale';
+import { GradientPurpleOrange,} from '@visx/gradient';
 import {
-  GradientPurpleOrange,
-} from '@visx/gradient';
+  LegendOrdinal,
+  LegendItem,
+  LegendLabel,
+} from '@visx/legend';
+import ParentSize from '@visx/responsive/lib/components/ParentSize';
+
 
 export default function Chart(props) {
   const verticalMargin = 20;
@@ -35,10 +40,17 @@ export default function Chart(props) {
     [randomArray, yMax],
   );
 
+  const legendGlyphSize = 15;
+  const legendScale = scaleOrdinal(
+    {
+      domain: ['Compared', 'Pivot'],
+      range: ['green','red']
+    })
+
   return (
-    <Grid container direction = 'column' justify='center' alignItems='center' style={{display: 'block'}}>
+    <Grid container direction = 'column' justify='center' alignItems='center' style={{display: 'block'}} id='Graph'>
       <Grid item xs = {12} style={{display: 'block'}} id='BarGraphDiv'>
-        <svg  viewBox = {`0 0 ${props.width} 600 `}>
+        <svg preserveAspectRatio viewBox = {`0 0 ${props.width} 600 `}>
           <GradientPurpleOrange id='teal'/>
           <rect x='0' y='0' width={props.width} height={600}  fill='url(#teal)' />
           <Group id='GraphBarGroup' >
@@ -61,9 +73,30 @@ export default function Chart(props) {
                     </Bar>
                   )
                 })
-            }
+            } 
           </Group>
         </svg>
+      </Grid>
+      <Grid item container xs={12} justify='center'>
+        <LegendOrdinal scale={legendScale} labelFormat = {label => `${label}`}>
+          {labels => (
+            <div style={{ display: 'flex', flexDirection: 'row' }} id = 'legend'>
+              {labels.map((label, i) => (
+                <LegendItem
+                  key={`legend-quantile-${i}`}
+                  margin="0 5px"
+                >
+                  <svg width={legendGlyphSize} height={legendGlyphSize}>
+                    <rect fill={label.value} width={legendGlyphSize} height={legendGlyphSize} />
+                  </svg>
+                  <LegendLabel align="left" margin="0 0 0 4px">
+                    {label.text}
+                  </LegendLabel>
+                </LegendItem>
+              ))}
+            </div>
+          )}
+        </LegendOrdinal>
       </Grid>
     </Grid>
 

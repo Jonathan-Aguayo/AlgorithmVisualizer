@@ -47,14 +47,19 @@ export function partition(array, low, high, animations)
             //push again to signify swapping
 
             swap(array, i, j);
-            animations.push({swap1: i, swap2:j });
+            animations.push({swap1: i, swap2:j, pivot: high });
+            animations.push({swap1: i, swap2:j, pivot: high });
+
+
         }
     }
     //push indexs because we are comparing 
     
 
     swap(array, i + 1, high)
-    animations.push({swap1: i + 1, swap2:high });
+    animations.push({swap1: i + 1, swap2:high, pivot: high });
+    animations.push({swap1: i + 1, swap2:high, pivot: high });
+
 
     return (i + 1);
 }

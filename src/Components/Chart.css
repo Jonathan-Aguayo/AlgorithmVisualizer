@@ -17,3 +17,12 @@
 .visx-bar .done{
      fill: green !important;
 }
+
+#legend{
+    border-style: solid;
+    border-radius: 8px;
+    margin: 5px 5px;
+    padding: 10px 10px;
+    color: black;
+    border-width: thin;
+}
