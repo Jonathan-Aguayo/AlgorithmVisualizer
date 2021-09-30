@@ -6,6 +6,8 @@ import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton';
+import {RestartAlt} from '@mui/icons-material'
 import {ChangeBarColors, createRandomArray, getQuickSortAnimations, SwapGraphBars} from './HelperFunctions.jsx'
 
 export default function Options(props)
@@ -18,6 +20,11 @@ export default function Options(props)
     {
         setBars(event.target.value);
         props.setArray(createRandomArray(event.target.value,1000,100));
+    }
+
+    const handleBarReset = (event) =>
+    {
+        props.setArray(createRandomArray(bars,1000,100));
     }
 
     const handleAlgoChange = (event) =>
@@ -68,6 +75,12 @@ export default function Options(props)
             case 'Quick-Sort' :
                 QuickSort(props.array);
                 break;
+            case 'Merge-Sort':
+                console.log('merge-sort');
+                break;
+            case 'Insertion-Sort':
+                console.log('merge-sort');
+                break;
             default:
                 alert('Sorry that is not an algorithm');
         }
@@ -77,9 +90,9 @@ export default function Options(props)
         <Grid container style={{marginTop:'10px', marginBottom:'10px',padding: '5px'}} justifyContent='space-evenly' alignItems='center'>
             <Grid item xs={4} md={2}>
                 <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Number of bars</InputLabel>
+                    <InputLabel id="Bar-Number-select">Number of bars</InputLabel>
                     <Select
-                    labelId="demo-simple-select-label"
+                    labelId="Bar-Number-select-label"
                     id="demo-simple-select"
                     value={bars}
                     label="Number of bars"
@@ -95,11 +108,11 @@ export default function Options(props)
             </Grid>
             <Grid item xs={4} md={2}>
                 <FormControl fullWidth>
-                    <InputLabel id="Algo-select-label">Sorting Algorithm</InputLabel>
+                    <InputLabel id="Algo-select">Sorting Algorithm</InputLabel>
                     <Select
                     labelId="Algo-Select-label"
                     id="Algo-Select"
-                    label="Algorithm"
+                    label="Sorting Algorithm"
                     value={algo}
                     onChange = {handleAlgoChange}
                     >
@@ -121,8 +134,13 @@ export default function Options(props)
                     valueLabelDisplay="auto"
                 />               
             </Grid>
-            <Grid item container xs={4} md={1} justifyContent='flex-end'>
+            <Grid item container xs={2} md={1} justifyContent='flex-end'>
                 <Button variant='outlined' onClick = {SortArray}> Go</Button>
+            </Grid>
+            <Grid item container xs={2} md={1} justifyContent='flex-end'>
+                <IconButton onClick={handleBarReset}>
+                    <RestartAlt fontSize='large'/>
+                </IconButton>
             </Grid>
         </Grid>
     );

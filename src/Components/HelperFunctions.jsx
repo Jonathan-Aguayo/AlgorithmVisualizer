@@ -6,12 +6,6 @@ export function swap(array, indexA, indexB)
     array[indexB] = temp;
 }
 
-export function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
-
 export function getQuickSortAnimations(array)
 {
     const animations = [];
@@ -43,24 +37,14 @@ export function partition(array, low, high, animations)
         if(array[j] < pivot)
         {                                                                          
             i = i+1;
-            //push indexs because we are comparing 
-            //push again to signify swapping
-
             swap(array, i, j);
             animations.push({swap1: i, swap2:j, pivot: high });
             animations.push({swap1: i, swap2:j, pivot: high });
-
-
         }
     }
-    //push indexs because we are comparing 
-    
-
     swap(array, i + 1, high)
     animations.push({swap1: i + 1, swap2:high, pivot: high });
     animations.push({swap1: i + 1, swap2:high, pivot: high });
-
-
     return (i + 1);
 }
 
@@ -77,25 +61,21 @@ export function SwapGraphBarsHeight(arrayBars,BarI, BarJ)
 
 export function SwapGraphBarsY(arrayBars,BarI, BarJ)
 {
-    return new Promise( (resolve, reject) => 
-    {
-        const tempy = arrayBars[BarI].getAttribute('y');
-        const barjHeight = Number(arrayBars[BarJ].getAttribute('y'))
-        arrayBars[BarI].setAttribute('y',barjHeight);
-        arrayBars[BarJ].setAttribute('y', tempy);
-        resolve('done');
-    })
+
+    const tempy = arrayBars[BarI].getAttribute('y');
+    const barjHeight = Number(arrayBars[BarJ].getAttribute('y'))
+    arrayBars[BarI].setAttribute('y',barjHeight);
+    arrayBars[BarJ].setAttribute('y', tempy);
+
 }
 
 export function SwapGraphBarsX(arrayBars,BarI, BarJ)
 {
-    return new Promise( (resolve, reject) => 
-    {
-        const tempy = arrayBars[BarI].getAttribute('x');
-        arrayBars[BarI].setAttribute('x', arrayBars[BarJ].getAttribute('x'));
-        arrayBars[BarJ].setAttribute('x', tempy);
-        resolve('done');
-    })
+
+    const tempy = arrayBars[BarI].getAttribute('x');
+    arrayBars[BarI].setAttribute('x', arrayBars[BarJ].getAttribute('x'));
+    arrayBars[BarJ].setAttribute('x', tempy);
+
 }
 
 export const SwapGraphBars =  (arrayBars, i, j) =>

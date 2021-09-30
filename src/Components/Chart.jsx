@@ -16,16 +16,15 @@ import ParentSize from '@visx/responsive/lib/components/ParentSize';
 export default function Chart(props) {
   const verticalMargin = 20;
   const xMax = props.width;
-  const yMax = 600;
+  const yMax = props.height;
   const randomArray = props.array;
 
   const xScale = React.useMemo(
     () =>
       scaleBand({
-        range: [0, xMax],
-        round: true,
+        range: [10, xMax-10],
         domain: randomArray,
-        padding: 0.3,
+        padding: 0.15,
       }),
     [randomArray, xMax],
   );
@@ -34,7 +33,6 @@ export default function Chart(props) {
     () =>
       scaleLinear({
         range: [yMax, 0],
-        round: true,
         domain: [0, Math.max(...randomArray)],
       }),
     [randomArray, yMax],
@@ -50,10 +48,10 @@ export default function Chart(props) {
   return (
     <Grid container direction = 'column' justify='center' alignItems='center' style={{display: 'block'}} id='Graph'>
       <Grid item xs = {12} style={{display: 'block'}} id='BarGraphDiv'>
-        <svg preserveAspectRatio viewBox = {`0 0 ${props.width} 600 `}>
+        <svg preserveAspectRatio viewBox = {`0 0 ${props.width} ${props.height} `}>
           <GradientPurpleOrange id='teal'/>
-          <rect x='0' y='0' width={props.width} height={600}  fill='url(#teal)' />
-          <Group id='GraphBarGroup' >
+          <rect x='0' y='0' width={props.width} height={props.height}  fill='url(#teal)' />
+          <Group id='GraphBarGroup'>
             {
               randomArray.map( (d, index) => 
                 {
