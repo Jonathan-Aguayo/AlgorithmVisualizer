@@ -3,7 +3,7 @@ export function getMergeSortAnimations(array)
     const animations = [];
     const auxArray = Array.from(array);
     MergeSortHelper(array, 0, array.length - 1, animations, auxArray);
-    return [animations, array];
+    return animations;
 }
 
 export function MergeSortHelper(array, low, high, animations, auxArray)

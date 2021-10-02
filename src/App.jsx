@@ -15,7 +15,7 @@ export default function App(props)
         if(parentDiv.current)
         {
             setWidth(parentDiv.current.offsetWidth);
-            setHeight(parentDiv.current.offsetWidth * 0.3);
+            setHeight(parentDiv.current.offsetWidth * 0.4);
         }
     },[array])
 

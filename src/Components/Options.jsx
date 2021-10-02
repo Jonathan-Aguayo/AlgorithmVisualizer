@@ -12,6 +12,7 @@ import {RestartAlt} from '@mui/icons-material';
 import {ChangeBarHeight, ChangeBarColors, createRandomArray, SwapGraphBars, ChangeBarY} from './HelperFunctions.jsx';
 import {getQuickSortAnimations,} from './Algorithms/Quick Sort';
 import { getMergeSortAnimations } from "./Algorithms/Merge Sort.js";
+import { getInsertionSortAnimations } from "./Algorithms/Insertion Sort.js";
 
 
 export default function Options(props)
@@ -74,21 +75,40 @@ export default function Options(props)
 
     function MergeSort(array)
     {
-        const [animations,sorted] = getMergeSortAnimations(array);
-    
+        const animations = getMergeSortAnimations(array);
         let arrayBars = document.getElementsByClassName('visx-bar');
         const auxArray = Array.from(arrayBars).map(bar => bar.getAttribute('height'))
+
         for(let i = 0; i  < animations.length; i++)
         {
             let index = animations[i].swap1;
             let value = animations[i].swap2;
-
+            
             setTimeout(() => 
             {
                 ChangeBarHeight(arrayBars, index, auxArray[value])
-                ChangeBarY(arrayBars,index, auxArray[value], props.height )
+                ChangeBarY(arrayBars, index, auxArray[value], props.height )
             },i*speed)
+        }
+    }
+
+    function InsertionSort(array)
+    {
+        const animations = getInsertionSortAnimations(array);
+        let arrayBars = document.getElementsByClassName('visx-bar');
+        console.log(animations);
+        const auxArray = Array.from(arrayBars).map(bar => bar.getAttribute('height'))
+
+        for(let i = 0; i  < animations.length; i++)
+        {
+            let index = animations[i].index;
+            let value = animations[i].value;
             
+            setTimeout(() => 
+            {
+                ChangeBarHeight(arrayBars, index, auxArray[value])
+                ChangeBarY(arrayBars, index, auxArray[value], props.height )
+            },i*speed)
         }
     }
 
@@ -103,7 +123,7 @@ export default function Options(props)
                 MergeSort(props.array);
                 break;
             case 'Insertion-Sort':
-                console.log('merge-sort');
+                InsertionSort(props.array);
                 break;
             default:
                 alert('Sorry that is not an algorithm');
@@ -149,17 +169,18 @@ export default function Options(props)
             <Grid item xs={5} md={2}>
                 <p>Time between steps (ms)</p>
                 <Slider
-                    defaultValue={speed}
+                    value={speed}
                     step={100}
                     marks
                     min={10}
                     max={1000}
                     onChange = {handleSpeedChange}
                     valueLabelDisplay="auto"
+                    style={{color: '#62a6bf'}}
                 />               
             </Grid>
             <Grid item container xs={2} md={1} justifyContent='flex-end'>
-                <Button variant='outlined' onClick = {Sort}>Sort</Button>
+                <Button variant='outlined' onClick = {Sort} style={{color: '#62a6bf', borderColor: '#62a6bf'}}>Sort</Button>
             </Grid>
             <Grid item container xs={2} md={1} justifyContent='flex-end'>
                 <IconButton onClick={handleBarReset}>

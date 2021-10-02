@@ -4,7 +4,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import { Group } from '@visx/group';
 import { scaleBand, scaleLinear, scaleOrdinal} from '@visx/scale';
-import { GradientPurpleOrange,} from '@visx/gradient';
+import { GradientPurpleOrange, RadialGradient} from '@visx/gradient';
 import {
   LegendOrdinal,
   LegendItem,
@@ -36,18 +36,19 @@ export default function Chart(props) {
     [randomArray, yMax],
   );
 
-  const legendGlyphSize = 15;
+  // eslint-disable-next-line no-lone-blocks
+  {/* const legendGlyphSize = 15;
   const legendScale = scaleOrdinal(
     {
       domain: ['Compared', 'Pivot'],
       range: ['green','red']
-    })
+    }) */}
 
   return (
     <Grid container direction = 'column' justify='center' alignItems='center' style={{display: 'block'}} id='Graph'>
       <Grid item xs = {12} style={{display: 'block'}} id='BarGraphDiv'>
         <svg preserveAspectRatio viewBox = {`0 0 ${props.width} ${props.height} `}>
-          <GradientPurpleOrange id='teal'/>
+          <RadialGradient id='teal' from='#62a6bf' to='#2a4f5c' r='75%' />
           <rect x='0' y='0' width={props.width} height={props.height}  fill='url(#teal)' />
           <Group id='GraphBarGroup'>
             {
@@ -73,6 +74,7 @@ export default function Chart(props) {
           </Group>
         </svg>
       </Grid>
+      {/*
       <Grid item container xs={12} justify='center'>
         <LegendOrdinal scale={legendScale} labelFormat = {label => `${label}`}>
           {labels => (
@@ -94,6 +96,7 @@ export default function Chart(props) {
           )}
         </LegendOrdinal>
       </Grid>
+              */}
     </Grid>
   );
 }
