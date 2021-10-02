@@ -8,8 +8,11 @@ import Slider from '@mui/material/Slider';
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import {RestartAlt} from '@mui/icons-material'
-import {ChangeBarColors, createRandomArray, getQuickSortAnimations, SwapGraphBars} from './HelperFunctions.jsx'
+import {RestartAlt} from '@mui/icons-material';
+import {ChangeBarHeight, ChangeBarColors, createRandomArray, SwapGraphBars, ChangeBarY} from './HelperFunctions.jsx';
+import {getQuickSortAnimations,} from './Algorithms/Quick Sort';
+import { getMergeSortAnimations } from "./Algorithms/Merge Sort.js";
+
 
 export default function Options(props)
 {
@@ -69,7 +72,27 @@ export default function Options(props)
         }
     }
 
-    function SortArray()
+    function MergeSort(array)
+    {
+        const [animations,sorted] = getMergeSortAnimations(array);
+    
+        let arrayBars = document.getElementsByClassName('visx-bar');
+        const auxArray = Array.from(arrayBars).map(bar => bar.getAttribute('height'))
+        for(let i = 0; i  < animations.length; i++)
+        {
+            let index = animations[i].swap1;
+            let value = animations[i].swap2;
+
+            setTimeout(() => 
+            {
+                ChangeBarHeight(arrayBars, index, auxArray[value])
+                ChangeBarY(arrayBars,index, auxArray[value], props.height )
+            },i*speed)
+            
+        }
+    }
+
+    function Sort()
     {
         switch (algo)
         {
@@ -77,7 +100,7 @@ export default function Options(props)
                 QuickSort(props.array);
                 break;
             case 'Merge-Sort':
-                console.log('merge-sort');
+                MergeSort(props.array);
                 break;
             case 'Insertion-Sort':
                 console.log('merge-sort');
@@ -88,62 +111,62 @@ export default function Options(props)
     }
 
     return(
-            <Grid container style={{marginTop: '10px',marginBottom: '10px',}} justifyContent='space-evenly' alignItems='center' component={Paper}>
-                <Grid item xs={4} md={2}>
-                    <FormControl fullWidth>
-                        <InputLabel id="Bar-Number-select">Number of bars</InputLabel>
-                        <Select
-                        labelId="Bar-Number-select-label"
-                        id="demo-simple-select"
-                        value={bars}
-                        label="Number of bars"
-                        onChange={handleBarChange}
-                        >
-                        <MenuItem value={10}>10</MenuItem>
-                        <MenuItem value={20}>20</MenuItem>
-                        <MenuItem value={50}>50</MenuItem>
-                        <MenuItem value={100}>100</MenuItem>
-                        <MenuItem value={500}>500</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={4} md={2}>
-                    <FormControl fullWidth>
-                        <InputLabel id="Algo-select">Sorting Algorithm</InputLabel>
-                        <Select
-                        labelId="Algo-Select-label"
-                        id="Algo-Select"
-                        label="Sorting Algorithm"
-                        value={algo}
-                        onChange = {handleAlgoChange}
-                        >
-                        <MenuItem value={'Merge-Sort'}>Merge Sort</MenuItem>
-                        <MenuItem value={'Insertion-Sort'}>Insertion Sort</MenuItem>
-                        <MenuItem value={'Quick-Sort'}>Quick Sort</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={5} md={2}>
-                    <p>Time between steps (ms)</p>
-                    <Slider
-                        defaultValue={speed}
-                        step={100}
-                        marks
-                        min={10}
-                        max={1000}
-                        onChange = {handleSpeedChange}
-                        valueLabelDisplay="auto"
-                    />               
-                </Grid>
-                <Grid item container xs={2} md={1} justifyContent='flex-end'>
-                    <Button variant='outlined' onClick = {SortArray}> Go</Button>
-                </Grid>
-                <Grid item container xs={2} md={1} justifyContent='flex-end'>
-                    <IconButton onClick={handleBarReset}>
-                        <RestartAlt fontSize='large'/>
-                    </IconButton>
-                </Grid>
+        <Grid container style={{marginTop: '10px',marginBottom: '10px',}} justifyContent='space-evenly' alignItems='center' component={Paper}>
+            <Grid item xs={4} md={2}>
+                <FormControl fullWidth>
+                    <InputLabel id="Bar-Number-select">Number of bars</InputLabel>
+                    <Select
+                    labelId="Bar-Number-select-label"
+                    id="demo-simple-select"
+                    value={bars}
+                    label="Number of bars"
+                    onChange={handleBarChange}
+                    >
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={50}>50</MenuItem>
+                    <MenuItem value={100}>100</MenuItem>
+                    <MenuItem value={500}>500</MenuItem>
+                    </Select>
+                </FormControl>
             </Grid>
+            <Grid item xs={4} md={2}>
+                <FormControl fullWidth>
+                    <InputLabel id="Algo-select">Sorting Algorithm</InputLabel>
+                    <Select
+                    labelId="Algo-Select-label"
+                    id="Algo-Select"
+                    label="Sorting Algorithm"
+                    value={algo}
+                    onChange = {handleAlgoChange}
+                    >
+                    <MenuItem value={'Merge-Sort'}>Merge Sort</MenuItem>
+                    <MenuItem value={'Insertion-Sort'}>Insertion Sort</MenuItem>
+                    <MenuItem value={'Quick-Sort'}>Quick Sort</MenuItem>
+                    </Select>
+                </FormControl>
+            </Grid>
+            <Grid item xs={5} md={2}>
+                <p>Time between steps (ms)</p>
+                <Slider
+                    defaultValue={speed}
+                    step={100}
+                    marks
+                    min={10}
+                    max={1000}
+                    onChange = {handleSpeedChange}
+                    valueLabelDisplay="auto"
+                />               
+            </Grid>
+            <Grid item container xs={2} md={1} justifyContent='flex-end'>
+                <Button variant='outlined' onClick = {Sort}>Sort</Button>
+            </Grid>
+            <Grid item container xs={2} md={1} justifyContent='flex-end'>
+                <IconButton onClick={handleBarReset}>
+                    <RestartAlt fontSize='large'/>
+                </IconButton>
+            </Grid>
+        </Grid>
     );
 
 

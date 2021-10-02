@@ -18,17 +18,16 @@ export default function App(props)
             setHeight(parentDiv.current.offsetWidth * 0.3);
         }
     },[array])
+
     return(
-            <div id='ParentDiv' ref={parentDiv} >
-                <Options array = {array} setArray = {setArray}/>
-                { 
-                    width ?
-                    <Chart width = {width} height={height} array = {array}/>
-                    :
-                    <p>Hello</p>
-                }
-            </div>
+        <div id='ParentDiv' ref={parentDiv} >
+            <Options array = {array} setArray = {setArray} height={height}/>
+            { 
+                width ?
+                <Chart width = {width} height={height} array = {array}/>
+                :
+                <p>Hello</p>
+            }
+        </div>
     )
-
-
 }

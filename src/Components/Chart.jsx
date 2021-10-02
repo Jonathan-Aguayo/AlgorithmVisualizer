@@ -10,8 +10,6 @@ import {
   LegendItem,
   LegendLabel,
 } from '@visx/legend';
-import ParentSize from '@visx/responsive/lib/components/ParentSize';
-
 
 export default function Chart(props) {
   const verticalMargin = 20;
@@ -97,11 +95,5 @@ export default function Chart(props) {
         </LegendOrdinal>
       </Grid>
     </Grid>
-
   );
-
-
-
-
-
 }

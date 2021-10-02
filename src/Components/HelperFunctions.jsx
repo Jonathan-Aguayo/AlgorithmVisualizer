@@ -6,48 +6,6 @@ export function swap(array, indexA, indexB)
     array[indexB] = temp;
 }
 
-export function getQuickSortAnimations(array)
-{
-    const animations = [];
-    if(array.length <= 1)
-        return array;
-    QuickSortHelper(array, 0, array.length -1, animations);
-    return [animations, array];
-}
-
-export function QuickSortHelper(array, low, high, animations)
-{
-    if(low < high)
-    {
-        let p = partition( array, low, high, animations);
-
-        QuickSortHelper(array, low, p - 1, animations);
-        QuickSortHelper(array, p + 1, high, animations);                             
-    }
-}
-
-export function partition(array, low, high, animations)
-{
-    let pivot = array[high];
-    let i = (low - 1);
-    let j = low;
-    for (j; j < high; j++)
-    {
-
-        if(array[j] < pivot)
-        {                                                                          
-            i = i+1;
-            swap(array, i, j);
-            animations.push({swap1: i, swap2:j, pivot: high });
-            animations.push({swap1: i, swap2:j, pivot: high });
-        }
-    }
-    swap(array, i + 1, high)
-    animations.push({swap1: i + 1, swap2:high, pivot: high });
-    animations.push({swap1: i + 1, swap2:high, pivot: high });
-    return (i + 1);
-}
-
 export function SwapGraphBarsHeight(arrayBars,BarI, BarJ)
 {
     return new Promise( (resolve, reject) => 
@@ -61,26 +19,14 @@ export function SwapGraphBarsHeight(arrayBars,BarI, BarJ)
 
 export function SwapGraphBarsY(arrayBars,BarI, BarJ)
 {
-
     const tempy = arrayBars[BarI].getAttribute('y');
     const barjHeight = Number(arrayBars[BarJ].getAttribute('y'))
     arrayBars[BarI].setAttribute('y',barjHeight);
     arrayBars[BarJ].setAttribute('y', tempy);
-
-}
-
-export function SwapGraphBarsX(arrayBars,BarI, BarJ)
-{
-
-    const tempy = arrayBars[BarI].getAttribute('x');
-    arrayBars[BarI].setAttribute('x', arrayBars[BarJ].getAttribute('x'));
-    arrayBars[BarJ].setAttribute('x', tempy);
-
 }
 
 export const SwapGraphBars =  (arrayBars, i, j) =>
 {
-
     SwapGraphBarsHeight(arrayBars,i,j).then( () => 
     {
         SwapGraphBarsY(arrayBars,i,j);
@@ -107,4 +53,12 @@ export function createRandomArray(arraySize, MaxNumber, minNumber)
     return randomArray;
 }
 
+export function ChangeBarHeight(array, index, value)
+{
+    array[index].setAttribute('height', value);
+}
 
+export function ChangeBarY(array, index, height, yMax)
+{
+    array[index].setAttribute('y', yMax - height);
+}
