@@ -1,5 +1,5 @@
 # Live project 
-This project has been deployed to heroku and could be accessed using [This] (https://algorithmvision.herokuapp.com/) link
+This project has been deployed to heroku and could be accessed using [This](https://algorithmvision.herokuapp.com/) link
 
 
 # Getting Started with Create React App
